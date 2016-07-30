@@ -97,7 +97,6 @@ INCLUDE = $(foreach d,$(sort $(INC_DIR) $(SRC_DIR)),-I$d)
 
 $(CONFIG): $(TARGET)
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.$(SUFFIX)
-	@echo "CC" $@ 
 	@$(CC) $(INCLUDE) $(CFLAGS) -c -o $@ $<
 
 $(TARGET): $(OBJECTS)

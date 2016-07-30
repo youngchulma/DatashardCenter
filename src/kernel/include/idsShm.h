@@ -17,9 +17,9 @@
 /* shared memory object */
 typedef struct IDS_Shm
 {
-    IDS_SInt    mShmId;
+    ids_sint32  mShmId;
     void       *mAddr;
-    IDS_Size    mSize;
+    ids_size    mSize;
 } IDS_Shm;
 
 IDS_RC idsShmCreate( IDS_Key aKey, IDS_Size aSize, IDS_Mode aPermission );

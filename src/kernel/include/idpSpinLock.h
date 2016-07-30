@@ -7,59 +7,48 @@
  * $Id$
  ******************************************************************************/
 
-#if !defined(_O_DKP_SPIN_LOCK_H_)
-#define _O_DKP_SPIN_LOCK_H_ 1
+#if !defined(_O_IDP_SPIN_LOCK_H_)
+#define _O_IDP_SPIN_LOCK_H_ 1
 
-#include <dkpSpinWait.h>
-#include <dkpThread.h>
+#include <idpSpinWait.h>
+#include <idpThr.h>
 
-/*
- * spinlock object
- */
-typedef struct DKP_SpinLock
+/* spinlock object */
+typedef struct IDP_SpinLock
 {
-    volatile dkp_sint32    mLock;
-    dkp_sint32             mSpinCount;
-} DKP_SpinLock;
-
+    volatile ids_sint32    mLock;
+    ids_sint32             mSpinCount;
+} IDP_SpinLock;
 
 #define ACP_SPIN_LOCK_INITIALIZER(aSpinCount) { 1, (aSpinCount) }
 
-/**
- * initializes a spinlock
- */
-DKP_INLINE void dkpSpinLockInit( DKP_SpinLock *aLock, DKP_SInt aSpinCount)
+/* initializes a spinlock */
+IDS_INLINE void idpSpinLockInit( IDP_SpinLock *aLock, IDS_SInt aSpinCount )
 {
     aLock->mLock = 1;
     aLock->mSpinCount = aSpinCount;
 }
 
-/**
- * trys a lock for a spinlock object
- */
-DKP_Bool dkpSpinLockTryLock( DKP_SpinLock *aLock );
+/* trys a lock for a spinlock object */
+IDS_Bool idpSpinLockTryLock( IDP_SpinLock *aLock );
 
-/**
- * returns a lock state of a spinlock object
- */
-DKP_INLINE DKP_Bool dkpSpinLockIsLocked( DKP_SpinLock *aLock )
+/* returns a lock state of a spinlock object */
+IDS_INLINE IDS_Bool idpSpinLockIsLocked( IDP_SpinLock *aLock )
 {
-    return (aLock->mLock == 0) ? DKP_TRUE : DKP_FALSE;
+    return (aLock->mLock == 0) ? IDS_TRUE : IDS_FALSE;
 }
 
-/**
- * locks a spinlock
- */
-DKP_INLINE void dkpSpinLockLock( DKP_SpinLock *aLock )
+/* locks a spinlock */
+IDS_INLINE void idpSpinLockLock( IDP_SpinLock *aLock )
 {
-    dkp_sint32 sSpinLoop;
-    dkp_sint32 sSpinCount;
-    dkp_uint32 sSpinSleepTime;
-    dkp_bool sIsMyLock;
+    ids_sint32 sSpinLoop;
+    ids_sint32 sSpinCount;
+    ids_uint32 sSpinSleepTime;
+    ids_bool sIsMyLock;
 
     /* set up conditions */
     //sSpinSleepTime = ACP_SPIN_WAIT_SLEEP_TIME_MIN;
-    sIsMyLock = DKP_FALSE;
+    sIsMyLock = IDS_FALSE;
 
     if (aLock->mSpinCount < 0)
     {
@@ -76,11 +65,11 @@ DKP_INLINE void dkpSpinLockLock( DKP_SpinLock *aLock )
              sSpinLoop <= sSpinCount; /* sSpinCount can be 0 in UP! */
              sSpinLoop++)
         {
-            if (dkpSpinLockIsLocked(aLock) == DKP_FALSE)
+            if (idpSpinLockIsLocked(aLock) == IDS_FALSE)
             {
-                if (dkpSpinLockTryLock(aLock) == DKP_TRUE)
+                if (idpSpinLockTryLock(aLock) == IDS_TRUE)
                 {
-                    sIsMyLock = DKP_TRUE;
+                    sIsMyLock = IDS_TRUE;
                     break;
                 }
                 else
@@ -94,16 +83,16 @@ DKP_INLINE void dkpSpinLockLock( DKP_SpinLock *aLock )
             }
         }
     
-        if (sIsMyLock == DKP_TRUE)
+        if (sIsMyLock == IDS_TRUE)
         {
             break;
         }
         else
         {
-            dkpSleepUsec(sSpinSleepTime);
+            idpSleepUsec(sSpinSleepTime);
         }
 
-        if (sSpinSleepTime < DKP_SPIN_WAIT_SLEEP_TIME_MAX)
+        if (sSpinSleepTime < IDP_SPIN_WAIT_SLEEP_TIME_MAX)
         {
             sSpinSleepTime *= 2;
         }
@@ -116,5 +105,5 @@ DKP_INLINE void dkpSpinLockLock( DKP_SpinLock *aLock )
     return;
 }
 
-#endif /* _O_DKP_SPIN_LOCK_H_ */
+#endif /* _O_IDP_SPIN_LOCK_H_ */
 

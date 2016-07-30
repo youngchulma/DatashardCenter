@@ -7,4 +7,4 @@
  * $Id$
  ******************************************************************************/
 
-This directory contains Datashard Kernel functions to implement Platform-Dependent operations.
+#include <idpAtomic.h>

@@ -7,25 +7,25 @@
  * $Id$
  **********************************************************************/
 
-#if !defined(_O_DKP_EXCEPTION_H_)
-#define _O_DKP_EXCEPTION_H_ 1
+#if !defined(_O_IDS_EXCEPTION_H_)
+#define _O_IDS_EXCEPTION_H_ 1
 
-#define DKP_EXCEPTION( aLabel )            \
-    goto DKP_EXCEPTION_END_LABEL;          \
+#define IDS_EXCEPTION( aLabel )            \
+    goto IDS_EXCEPTION_END_LABEL;          \
     aLabel:
 
-#define DKP_EXCEPTION_END                  \
-    DKP_EXCEPTION_END_LABEL:;
+#define IDS_EXCEPTION_END                  \
+    IDS_EXCEPTION_END_LABEL:;
 
-#define DKP_TEST( aExpr )                  \
+#define IDS_TEST( aExpr )                  \
 {                                          \
     if ( aExpr )                           \
     {                                      \
-        goto DKP_EXCEPTION_END_LABEL;      \
+        goto IDS_EXCEPTION_END_LABEL;      \
     }                                      \
 }
 
-#define DKP_TEST_RAISE( aExpr, aLabel )    \
+#define IDS_TEST_RAISE( aExpr, aLabel )    \
 {                                          \
     if ( aExpr )                           \
     {                                      \
@@ -33,7 +33,7 @@
     }                                      \
 }
 
-#define DKP_RAISE( aLabel )                \
+#define IDS_RAISE( aLabel )                \
     goto aLabel;
 
-#endif /*_O_DKP_EXCEPTION_H_ */
+#endif /*_O_IDS_EXCEPTION_H_ */

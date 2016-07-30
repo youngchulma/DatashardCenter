@@ -4,35 +4,35 @@
  **********************************************************************/
 
 /***********************************************************************
- * $Id: dkmMemory.c 34 2016-07-29 09:57:09Z randyma $
+ * $Id$
  **********************************************************************/
 
-#include <dkmMemory.h>
+#include <idmMem.h>
 
-DKP_RC dkmMemAlloc( void **aAddress, DKP_Size aSize )
+IDS_RC idmMemAlloc( void **aAddress, IDS_Size aSize )
 {
-	DKP_TEST( (aAddress == NULL) || (aSize == 0) );
+	IDS_TEST( (aAddress == NULL) || (aSize == 0) );
 
 	*aAddress = malloc(aSize);
 
-	DKP_TEST( *aAddress == NULL );
+	IDS_TEST( *aAddress == NULL );
 
-	return DKP_SUCCESS;
+	return IDS_SUCCESS;
 
-	DKP_EXCEPTION_END;
+	IDS_EXCEPTION_END;
 
-	return DKP_FAILURE;
+	return IDS_FAILURE;
 }
 
-DKP_RC dkmMemFree( void *aAddr )
+IDS_RC idmMemFree( void *aAddr )
 {
-	DKP_TEST( aAddr == NULL );
+	IDS_TEST( aAddr == NULL );
 
 	free(aAddr);
 
-	return DKP_SUCCESS;
+	return IDS_SUCCESS;
 
-	DKP_EXCEPTION_END;
+	IDS_EXCEPTION_END;
 
-	return DKP_FAILURE;
+	return IDS_FAILURE;
 }

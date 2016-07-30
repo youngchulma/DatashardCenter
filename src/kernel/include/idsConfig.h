@@ -7,8 +7,8 @@
  * $Id$
  ******************************************************************************/
 
-#if !defined(_O_DKP_CONFIG_H_)
-#define _O_DKP_CONFIG_H_
+#if !defined(_O_IDS_CONFIG_H_)
+#define _O_IDS_CONFIG_H_ 1
 
 #include <malloc.h>
 #include <sys/mount.h>
@@ -55,4 +55,4 @@
 /* Linux Option parser header */
 #include <getopt.h>
 
-#endif
+#endif /* _O_IDS_CONFIG_H_ */

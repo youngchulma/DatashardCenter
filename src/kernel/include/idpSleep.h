@@ -7,13 +7,13 @@
  * $Id$
  ******************************************************************************/
 
-#if !defined(_O_DKS_SLEEP_H_)
-#define _O_DKS_SLEEP_H_ 1
+#if !defined(_O_IDP_SLEEP_H_)
+#define _O_IDP_SLEEP_H_ 1
 
-#include <dkpTypes.h>
+#include <idsTypes.h>
 
 /* sleeps aSec second(s) */
-DKP_INLINE void dksSleepSec(DKP_UInt aSec)
+IDS_INLINE void idpSleepSec(IDS_UInt aSec)
 {
     struct timeval sTimeVal;
 
@@ -24,7 +24,7 @@ DKP_INLINE void dksSleepSec(DKP_UInt aSec)
 }
 
 /* sleeps @a aMsec millisecond(s) */
-DKP_INLINE void dksSleepMsec(DKP_UInt aMsec)
+IDS_INLINE void idpSleepMsec(IDS_UInt aMsec)
 {
     struct timeval sTimeVal;
 
@@ -35,7 +35,7 @@ DKP_INLINE void dksSleepMsec(DKP_UInt aMsec)
 }
 
 /* sleeps @a aUsec microsecond(s) */
-DKP_INLINE void dksSleepUsec(DKP_UInt aUsec)
+IDS_INLINE void idpSleepUsec(IDS_UInt aUsec)
 {
     struct timeval sTimeVal;
 
@@ -45,4 +45,4 @@ DKP_INLINE void dksSleepUsec(DKP_UInt aUsec)
     (void)select(0, NULL, NULL, NULL, &sTimeVal);
 }
 
-#endif /* _O_DKS_SLEEP_H_ */
+#endif /* _O_IDP_SLEEP_H_ */

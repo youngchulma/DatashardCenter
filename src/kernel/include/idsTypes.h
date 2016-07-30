@@ -6,93 +6,101 @@
 /***********************************************************************
  * $Id$
  **********************************************************************/
-#if !defined(_O_DKP_TYPES_H_)
-#define _O_DKP_TYPES_H_ 1
+#if !defined(_O_IDS_TYPES_H_)
+#define _O_IDS_TYPES_H_ 1
 
-#include <dkpConfig.h>
+#include <idsConfig.h>
 
-#define DKP_SIZEOF(a) ((UInt)sizeof(a))
+#define IDS_SIZEOF(a) ((UInt)sizeof(a))
 
 /* Character Type */
-typedef char                  dkp_schar;
-typedef unsigned char         dkp_uchar;
+typedef char                  ids_schar;
+typedef unsigned char         ids_uchar;
 
-typedef dkp_schar             DKP_SChar;
-typedef dkp_uchar             DKP_UChar;
+typedef ids_schar             IDS_SChar;
+typedef ids_uchar             IDS_UChar;
 
 /* Integer Type */
 /* 1-byte signed/unsigned integer type */
-typedef signed char           dkp_sint8;
-typedef unsigned char         dkp_uint8;
+typedef signed char           ids_sint8;
+typedef unsigned char         ids_uint8;
 
-typedef dkp_sint8             DKP_SInt8;
-typedef dkp_uint8             DKP_UInt8;
+typedef ids_sint8             IDS_SInt8;
+typedef ids_uint8             IDS_UInt8;
 
 /* 2-byte signed/unsigned integer type */
-typedef signed short          dkp_sint16;
-typedef unsigned short        dkp_uint16;
+typedef signed short          ids_sint16;
+typedef unsigned short        ids_uint16;
 
-typedef dkp_sint16            DKP_SShort;
-typedef dkp_uint16            DKP_UShort;
+typedef ids_sint16            IDS_SShort;
+typedef ids_uint16            IDS_UShort;
 
 /* 4-byte signed/unsigned integer type */
-typedef signed int			  dkp_sint32;
-typedef unsigned int          dkp_uint32;
+typedef signed int            ids_sint32;
+typedef unsigned int          ids_uint32;
 
-typedef dkp_sint32            DKP_SInt;
-typedef dkp_uint32            DKP_UInt;
+typedef ids_sint32            IDS_SInt;
+typedef ids_uint32            IDS_UInt;
 
 /* 16-byte signed/unsigned integer type */
-#if defined(DKP_CFG_OS_WIN)
+typedef signed long long      ids_sint64;
+typedef unsigned long long    ids_uint64;
 
-#else
-
-typedef signed long long      dkp_sint64;
-typedef unsigned long long    dkp_uint64;
-
-typedef dkp_sint64            DKP_SLong;
-typedef dkp_uint64            DKP_ULong;
-#endif
+typedef ids_sint64            IDS_SLong;
+typedef ids_uint64            IDS_ULong;
 
 /* Floating Type */
-typedef float                 dkp_float;
-typedef double                dkp_double;
+typedef float                 ids_float;
+typedef double                ids_double;
 
-typedef dkp_float             DKP_Float;
-typedef dkp_double            DKP_Double;
+typedef ids_float             IDS_Float;
+typedef ids_double            IDS_Double;
 
 /* System Type */
-typedef key_t                 DKP_Key;
-typedef size_t                DKP_Size;
-typedef ssize_t               DKP_Ssize;
-typedef off_t                 DKP_Offset;
+typedef key_t                 ids_key;
+typedef ids_key               IDS_Key;
+
+typedef size_t                ids_size;
+typedef ids_size              IDS_Size;
+
+typedef ssize_t               ids_ssize;
+typedef ids_ssize             IDS_Ssize;
+
+typedef off_t                 ids_offset;
+typedef ids_offset            IDS_Offset;
+
+/* file and shared memory permission type */
+typedef mode_t                ids_mode;
+typedef ids_mode              IDS_Mode;
 
 /* Boolean Type */
-typedef dkp_uint8             dkp_bool;
-typedef dkp_bool              DKP_Bool;
-#define DKP_FALSE             ((dkp_bool)0)
-#define DKP_TRUE              ((dkp_bool)1)
+typedef ids_uint8             ids_bool;
+typedef ids_bool              IDS_Bool;
+#define IDS_FALSE             ((ids_bool)0)
+#define IDS_TRUE              ((ids_bool)1)
 
 /* Return Type */
-typedef dkp_sint32            DKP_RC;
+typedef ids_sint32            IDS_RC;
 
 /* Printf formats */
-#define DKP_INT32_FMT         "d"
-#define DKP_UINT32_FMT        "u"
-#define DKP_INT64_FMT         "lld"
-#define DKP_UINT64_FMT        "llu"
+#define IDS_INT32_FMT         "d"
+#define IDS_UINT32_FMT        "u"
+#define IDS_INT64_FMT         "lld"
+#define IDS_UINT64_FMT        "llu"
+
+#define IDS_UNUSED(aVar) (void)(aVar)
 
 /* Inline function */
 #if defined(__GNUC__)
-#define DKP_INLINE static __inline__
+#define IDS_INLINE static __inline__
 #elif ((__GNUC__) > 3 || ((__GNUC__ == 3) && (__GNUC_MINOR__ > 0)))
-#define DKP_INLINE static __inline__ __attribute__((always_inline))
+#define IDS_INLINE static __inline__ __attribute__((always_inline))
 #else
-#define DKP_INLINE static __inline__
+#define IDS_INLINE static __inline__
 #endif
 
 /* MIN / MAX */
-#define DKP_MAX(a,b) ((a) > (b) ? (a) : (b))
-#define DKP_MIN(a,b) ((a) < (b) ? (a) : (b))
+#define IDS_MAX(a,b) ((a) > (b) ? (a) : (b))
+#define IDS_MIN(a,b) ((a) < (b) ? (a) : (b))
 
-#endif /*_O_DKP_TYPES_H_ */
+#endif /*_O_IDS_TYPES_H_ */

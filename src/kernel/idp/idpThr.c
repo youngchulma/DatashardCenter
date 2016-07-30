@@ -7,4 +7,7 @@
  * $Id$
  ******************************************************************************/
 
-This directory contains Datashard Kernel functions to implement Platform-Dependent operations.
+#include <idpThr.h>
+#include <idpSpinWait.h>
+
+/* creates a thread */

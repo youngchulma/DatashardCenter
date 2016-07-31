@@ -4,13 +4,13 @@
  *****************************************************************************/
 
 /*****************************************************************************
- * $Id: idlQueue.h 3773 2016-07-28 09:05:43Z randyma $
+ * $Id$
  *****************************************************************************/
 
 #if !defined(_O_IDL_QUEUE_H_)
 #define _O_IDL_QUEUE_H_ 1
 
-#include <dkpSpinLock.h>
+#include <idpSpinLock.h>
 #include <idlMemPool.h>
 
 typedef struct IDL_Queue IDL_Queue;

@@ -10,14 +10,15 @@
 #if !defined(_O_IDP_SPIN_LOCK_H_)
 #define _O_IDP_SPIN_LOCK_H_ 1
 
-#include <idpSpinWait.h>
 #include <idpThr.h>
+#include <idpAtomic.h>
+#include <idpSpinWait.h>
 
 /* spinlock object */
 typedef struct IDP_SpinLock
 {
-    volatile ids_sint32    mLock;
-    ids_sint32             mSpinCount;
+    volatile IDS_SInt mLock;
+    IDS_SInt          mSpinCount;
 } IDP_SpinLock;
 
 #define ACP_SPIN_LOCK_INITIALIZER(aSpinCount) { 1, (aSpinCount) }
@@ -41,18 +42,18 @@ IDS_INLINE IDS_Bool idpSpinLockIsLocked( IDP_SpinLock *aLock )
 /* locks a spinlock */
 IDS_INLINE void idpSpinLockLock( IDP_SpinLock *aLock )
 {
-    ids_sint32 sSpinLoop;
-    ids_sint32 sSpinCount;
-    ids_uint32 sSpinSleepTime;
-    ids_bool sIsMyLock;
+    IDS_SInt sSpinLoop;
+    IDS_SInt sSpinCount;
+    IDS_UInt sSpinSleepTime;
+    IDS_Bool sIsMyLock;
 
     /* set up conditions */
-    //sSpinSleepTime = ACP_SPIN_WAIT_SLEEP_TIME_MIN;
+    sSpinSleepTime = IDP_SPIN_WAIT_SLEEP_TIME_MIN;
     sIsMyLock = IDS_FALSE;
 
     if (aLock->mSpinCount < 0)
     {
-     //   sSpinCount = acpSpinWaitGetDefaultSpinCount();
+        sSpinCount = idpSpinWaitGetDefaultSpinCount();
     }
     else
     {
@@ -103,6 +104,16 @@ IDS_INLINE void idpSpinLockLock( IDP_SpinLock *aLock )
     }
 
     return;
+}
+
+void idpSpinLockUnlock( IDP_SpinLock *aLock )
+{
+    (void)idpAtomicSet32(&(aLock->mLock), 1);
+}
+
+void idpSpinLockSetCount( IDP_SpinLock *aLock, IDS_SInt aSpinCount )
+{
+    aLock->mSpinCount = aSpinCount;
 }
 
 #endif /* _O_IDP_SPIN_LOCK_H_ */

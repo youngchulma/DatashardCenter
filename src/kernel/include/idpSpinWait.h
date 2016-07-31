@@ -27,7 +27,7 @@ void     idpSpinWaitSetDefaultSpinCount(IDS_SInt aSpinCount);
     {                                                                       \
         IDS_SInt sSpinLoop_MACRO_LOCAL_VAR;                                 \
         IDS_SInt sSpinCount_MACRO_LOCAL_VAR;                                \
-        IDS_Uint sSpinSleepTime_MACRO_LOCAL_VAR;                            \
+        IDS_UInt sSpinSleepTime_MACRO_LOCAL_VAR;                            \
                                                                             \
         if ((aSpinCount) < 0)                                               \
         {                                                                   \

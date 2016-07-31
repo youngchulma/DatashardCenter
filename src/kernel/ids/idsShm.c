@@ -123,13 +123,18 @@ IDS_RC idsShmAttach( IDS_Shm *aShm, IDS_Key aKey )
 IDS_RC idsShmDetach( IDS_Shm *aShm )
 {
     IDS_RC sRc;
+    IDS_SInt sRet;
 
-    sRc = shmdt(aShm->mAddr);
-    IDS_TEST( sRc == -1 );
+    sRet = shmdt(aShm->mAddr);
+    IDS_TEST( sRet == -1 );
     
     return IDS_RC_SUCCESS;
 
+    IDS_EXCEPTION( ERR_DETACH )
+    {
+        sRc = IDS_RC_GET_OS_ERROR();
+    }
     IDS_EXCEPTION_END;
 
-    return IDS_RC_GET_OS_ERROR();
+    return sRc;
 }

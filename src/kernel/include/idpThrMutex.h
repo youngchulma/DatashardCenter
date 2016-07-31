@@ -21,35 +21,38 @@
 /* recursive mutex */
 #define IDP_THR_MUTEX_RECURSIVE  (2)
 
+/* thread mutex initializer */
+#define IDP_THR_MUTEX_INITIALIZER { PTHREAD_MUTEX_INITIALIZER }
+
 /* thread mutex object */
-typedef struct IDP_Thr_Mutex
+typedef struct IDP_ThrMutex
 {
     pthread_mutex_t mMutex;
-} IDP_Thr_Mutex;
+} IDP_ThrMutex;
 
 /* create a thread mutex */
-IDS_RC idpThrMutexCreate( IDP_Thr_Mutex *aMutex, IDS_SInt aFlag );
+IDS_RC idpThrMutexCreate( IDP_ThrMutex *aMutex, IDS_SInt aFlag );
 
 /* destroys a thread mutex */
-IDS_INLINE IDS_RC idpThrMutexDestroy( IDP_Thr_Mutex *aMutex )
+IDS_INLINE IDS_RC idpThrMutexDestroy( IDP_ThrMutex *aMutex )
 {
 	return pthread_mutex_destroy(&aMutex->mMutex);
 }
 
 /* lock a thread mutex */
-IDS_INLINE IDS_RC idpThrMutexLock( IDP_Thr_Mutex *aMutex )
+IDS_INLINE IDS_RC idpThrMutexLock( IDP_ThrMutex *aMutex )
 {
 	return pthread_mutex_lock(&aMutex->mMutex);
 }
 
 /* trys lock a thread mutex */
-IDS_INLINE IDS_RC idpThrMutexTryLock( IDP_Thr_Mutex *aMutex )
+IDS_INLINE IDS_RC idpThrMutexTryLock( IDP_ThrMutex *aMutex )
 {
 	return pthread_mutex_trylock(&aMutex->mMutex);
 }
 
 /* unlock a thread mutex */
-IDS_INLINE IDS_RC idsThrMutexUnLock( IDP_Thr_Mutex *aMutex )
+IDS_INLINE IDS_RC idsThrMutexUnLock( IDP_ThrMutex *aMutex )
 {
 	return pthread_mutex_unlock(&aMutex->mMutex);
 }

@@ -12,6 +12,7 @@
 
 #include <idsTypes.h>
 #include <idsError.h>
+#include <idsException.h>
 
 /* semaphore object */
 typedef struct IDS_Sem

@@ -17,16 +17,16 @@
 #define IDP_THREAD_STACK_SIZE (0x10000)
 
 /* thread attribute object */
-typedef struct IDP_Thr_Attr
+typedef struct IDP_ThrAttr
 {
     pthread_attr_t mAttr;
-} IDP_Thr_Attr;
+} IDP_ThrAttr;
 
 /* thread function */
-typedef IDS_SInt IDP_Thr_Func(void *);
+typedef IDS_SInt IDP_ThrFunc(void *);
 
 /* thread once function */
-typedef IDS_SInt IDP_Thr_Once_Func(void *);
+typedef IDS_SInt IDP_ThrOnceFunc(void *);
 
 /* thread object */
 typedef struct IDP_Thr
@@ -39,37 +39,37 @@ typedef volatile enum
 	IDP_THR_ONCE_INIT = 0,
 	IDP_THR_ONCE_WAIT,
 	IDP_THR_ONCE_DONE
-} IDP_Thr_Once;
+} IDP_ThrOnce;
 
 /* create thread attribute object */
-IDS_INLINE IDS_RC idpThrAttrCreate( IDP_Thr_Attr *aAttr )
+IDS_INLINE IDS_RC idpThrAttrCreate( IDP_ThrAttr *aAttr )
 {
 	return pthread_attr_init(&aAttr->mAttr);
 }
 
 /* destroys thread attribute object */
-IDS_INLINE IDS_RC idpThrAttrDestroy( IDP_Thr_Attr *aAttr )
+IDS_INLINE IDS_RC idpThrAttrDestroy( IDP_ThrAttr *aAttr )
 {
 	return pthread_attr_destroy(&aAttr->mAttr);
 }
 
 /* sets thread bound mode to the thread attribute object */
-IDS_INLINE IDS_RC idpThrAttrSetScope( IDP_Thr_Attr *aAttr, IDS_Bool aFlag )
+IDS_INLINE IDS_RC idpThrAttrSetScope( IDP_ThrAttr *aAttr, IDS_Bool aFlag )
 {
 	return pthread_attr_setscope(&aAttr->mAttr,
                                 (aFlag == IDS_TRUE) ? PTHREAD_SCOPE_SYSTEM : PTHREAD_SCOPE_PROCESS);
 }
 
 /* sets thread stack size to the thread attribute object */
-IDS_RC idpThrAttrSetStackSize( IDP_Thr_Attr *aAttr, IDS_Size aStackSize)
+IDS_RC idpThrAttrSetStackSize( IDP_ThrAttr *aAttr, IDS_Size aStackSize)
 {
 	return pthread_attr_setstacksize(&aAttr->mAttr, aStackSize);
 }
 
 /* create a new thread */
 IDS_RC idpThrCreate( IDP_Thr      *aThr,
-                     IDP_Thr_Attr *aAttr,
-                     IDP_Thr_Func *aFunc,
+                     IDP_ThrAttr *aAttr,
+                     IDP_ThrFunc *aFunc,
                      void         *aArg );
 
 /* detaches a thread */

@@ -79,7 +79,12 @@ typedef ids_bool              IDS_Bool;
 #define IDS_FALSE             ((ids_bool)0)
 #define IDS_TRUE              ((ids_bool)1)
 
-/* Return Type */
+
+/* Literal */
+#define IDS_UINT64_LITERAL(aVal)   ((ids_uint64)(aVal ## UL))
+#define IDS_SINT64_LITERAL(aVal)   ((ids_sint64)(aVal ## L))
+#define IDS_SINT64_TO_DOUBLE(aVal) ((ids_double)(aVal))
+
 typedef ids_sint32            IDS_RC;
 
 /* Printf formats */

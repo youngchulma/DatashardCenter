@@ -8,8 +8,6 @@
  ******************************************************************************/
 
 #include <idsSem.h>
-#include <idpThr.h>
-#include <idsException.h>
 
 typedef union IDS_SemMutexCtl
 {
@@ -135,8 +133,8 @@ IDS_RC idsSemClose( IDS_Sem *aSem )
 IDS_RC idsSemAcquire( IDS_Sem *aSem )
 {
     struct sembuf sOp;
-    IDS_SInt      sRet;
-    IDS_RC        sRc;
+    IDS_SInt sRet;
+    IDS_RC   sRc;
 
     sOp.sem_num = 0;
     sOp.sem_op  = -1;
@@ -145,36 +143,33 @@ IDS_RC idsSemAcquire( IDS_Sem *aSem )
     while (1)
     {
         sRet = semop(aSem->mSemID, &sOp, 1);
+        IDS_TEST( sRet == 0 );
 
-        if (sRet != 0)
+        sRc = IDS_RC_GET_OS_ERROR();
+
+        if ( IDS_RC_IS_EINTR(sRc) )
         {
-            sRc = IDS_RC_GET_OS_ERROR();
-
-            if ( IDS_RC_IS_EINTR(sRc) )
-            {
-                continue;
-            }
-            else
-            {
-                break;
-            }
+            continue;
         }
         else
         {
-            sRc = IDS_RC_SUCCESS;
             break;
         }
     }
 
     return sRc;
+
+    IDS_EXCEPTION_END;
+
+    return IDS_RC_SUCCESS;
 }
 
 /* trys to acquire a semaphore */
 IDS_RC idsSemTryAcquire( IDS_Sem *aSem )
 {
     struct sembuf sOp;
-    IDS_SInt      sRet;
-    IDS_RC        sRc;
+    IDS_SInt sRet;
+    IDS_RC   sRc;
 
     sOp.sem_num = 0;
     sOp.sem_op  = -1;
@@ -183,41 +178,37 @@ IDS_RC idsSemTryAcquire( IDS_Sem *aSem )
     while (1)
     {
         sRet = semop(aSem->mSemID, &sOp, 1);
+        IDS_TEST( sRet == 0 );
 
-        if (sRet != 0)
+        sRc = IDS_RC_GET_OS_ERROR();
+
+        if ( IDS_RC_IS_EINTR(sRc) )
         {
-            sRc = IDS_RC_GET_OS_ERROR();
-
-            if (IDS_RC_IS_EINTR(sRc))
-            {
-                continue;
-            }
-            else if (IDS_RC_IS_EAGAIN(sRc))
-            {
-                sRc = IDS_RC_EBUSY;
-                break;
-            }
-            else
-            {
-                break;
-            }
+            continue;
+        }
+        else if ( IDS_RC_IS_EAGAIN(sRc) )
+        {
+            sRc = IDS_RC_EBUSY;
         }
         else
         {
-            sRc = IDS_RC_SUCCESS;
             break;
         }
     }
 
     return sRc;
+
+    IDS_EXCEPTION_END;
+
+    return IDS_RC_SUCCESS;
 }
 
 /* releases a semaphore */
 IDS_RC idsSemRelease( IDS_Sem *aSem )
 {
     struct sembuf sOp;
-    IDS_SInt      sRet;
-    IDS_RC        sRc;
+    IDS_SInt sRet;
+    IDS_RC   sRc;
 
     sOp.sem_num = 0;
     sOp.sem_op  = 1;
@@ -226,26 +217,24 @@ IDS_RC idsSemRelease( IDS_Sem *aSem )
     while (1)
     {
         sRet = semop(aSem->mSemID, &sOp, 1);
+        IDS_TEST( sRet == 0 );
 
-        if (sRet != 0)
+        sRc = IDS_RC_GET_OS_ERROR();
+
+        if ( IDS_RC_IS_EINTR(sRc) )
         {
-            sRc = IDS_RC_GET_OS_ERROR();
-
-            if (IDS_RC_IS_EINTR(sRc))
-            {
-                continue;
-            }
-            else
-            {
-                break;
-            }
+            continue;
         }
         else
         {
-            sRc = IDS_RC_SUCCESS;
             break;
         }
     }
 
     return sRc;
+
+    IDS_EXCEPTION_END;
+
+    return IDS_RC_SUCCESS;
 }
+

@@ -20,19 +20,19 @@ typedef struct IDL_QueueSmrRec IDL_QueueSmrRec;
 
 typedef struct IDL_QueueOp
 {
-    SKP_RC (*mEnqueue)(IDL_Queue *aQueue, void *aObj);
-    SKP_RC (*mDequeue)(IDL_Queue *aQueue, void **aObj);
+    IDS_RC (*mEnqueue)(IDL_Queue *aQueue, void *aObj);
+    IDS_RC (*mDequeue)(IDL_Queue *aQueue, void **aObj);
 } IDL_QueueOp;
 
 typedef struct IDL_QueueLockFree
 {
-    aclQueueSmrRec *mSmrRec;
+    IDL_QueueSmrRec *mSmrRec;
 } IDL_QueueLockFree;
 
 typedef struct IDL_QueueSpinLock
 {
-    SKP_SpinLock mHeadLock;
-    SKP_SpinLock mTailLock;
+    IDP_SpinLock mHeadLock;
+    IDP_SpinLock mTailLock;
 } IDL_QueueSpinLock;
 
 struct IDL_Queue
@@ -43,33 +43,33 @@ struct IDL_Queue
         IDL_QueueSpinLock  mSpinLock;
     } mSpec;
 
-	SKP_SInt              mParallelFactor;
+	IDS_SInt              mParallelFactor;
     IDL_QueueOp           *mOp;
     IDL_QueueNode         *mHead;
     IDL_QueueNode         *mTail;
 
-    volatile acp_sint32_t          mNodeCount;
+    volatile IDS_SInt     mNodeCount;
 };
 
-SKP_RC idlQueueCreate(IDL_Queue *aQueue, SKP_SInt aParallelFactor);
+IDS_RC idlQueueCreate(IDL_Queue *aQueue, IDS_SInt aParallelFactor);
 
 void idlQueueDestroy(IDL_Queue *aQueue);
 
-SKP_Bool idlQueueIsEmpty(IDL_Queue *aQueue);
+IDS_Bool idlQueueIsEmpty(IDL_Queue *aQueue);
 
-SKP_INLINE SKP_RC idlQueueEnqueue(IDL_Queue *aQueue, void *aObj)
+IDS_INLINE IDS_RC idlQueueEnqueue(IDL_Queue *aQueue, void *aObj)
 {
     return aQueue->mOp->mEnqueue(aQueue, aObj);
 }
 
-SKP_INLINE SKP_RC aclQueueDequeue(IDL_Queue *aQueue, void **aObj)
+IDS_INLINE IDS_RC aclQueueDequeue(IDL_Queue *aQueue, void **aObj)
 {
     return aQueue->mOp->mDequeue(aQueue, aObj);
 }
 
-SKP_INLINE SKP_SInt idlQueueGetCount(IDL_Queue *aQueue)
+IDS_INLINE IDS_SInt idlQueueGetCount(IDL_Queue *aQueue)
 {
-    dkp_sint32 sCount = aQueue->mNodeCount;
+    IDS_SInt sCount = aQueue->mNodeCount;
     return (sCount < 0)? 0 : sCount;
 }
 

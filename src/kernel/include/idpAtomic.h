@@ -10,7 +10,7 @@
 #if !defined(_O_IDP_ATOMIC_H_)
 #define _O_IDP_ATOMIC_LINUX_H_ 1
 
-#include<idsTypes.h> 
+#include <idsTypes.h> 
 
 IDS_INLINE IDS_SShort idpAtomicCas16( volatile void      *aAddr,
                                       volatile IDS_SShort aWith,

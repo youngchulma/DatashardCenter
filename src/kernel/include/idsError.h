@@ -12,9 +12,17 @@
 
 #include <idsTypes.h>
 
+#define IDS_RC_CONVERT(e)        (e)
+#define IDS_RC_REVERT(e)         (e)
+#define IDS_RC_FROM_SYS_ERROR(e) (e)
+#define IDS_RC_TO_SYS_ERROR(e)   (e)
+
 /* Just support UNIX only */
 #define IDS_RC_GET_OS_ERROR() (errno)
 #define IDS_RC_SET_OS_ERROR(e) (errno = (e))
+
+#define IDS_RC_GET_NET_ERROR() (errno)
+#define IDS_RC_SET_NET_ERROR(e) (errno = (e))
 
 /* range of error code */
 #define IDS_RC_RR_STD      0

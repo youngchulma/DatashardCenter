@@ -29,7 +29,7 @@ typedef struct IDC_PollSet
 {
     IDS_SInt        mMaxCount;    /* number of object can be registered   */
     IDS_SInt        mCurCount;    /* number of registered object          */
-    IDC_PollObk     *mObjs;       /* registered object array              */
+    IDC_PollObj     *mObjs;       /* registered object array              */
 
     struct epoll_event *mEvents;  /* returned event array from epoll      */
     IDS_SInt        mHandle;      /* epoll descriptor                     */
@@ -54,7 +54,7 @@ IDS_RC idcPollAddSock( IDC_PollSet *aPollSet,
 IDS_RC idcPollRemoveSock(IDC_PollSet *aPollSet, IDC_Sock *aSock);
 
 IDS_RC idcPollDispatch( IDC_PollSet      *aPollSet,
-                        IDP_Time          aTimeout,
+                        IDS_Time          aTimeout,
                         IDC_PollCallback *aCallback, 
                         void             *aContext );
 
